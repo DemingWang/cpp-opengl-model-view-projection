@@ -150,21 +150,28 @@ int main() {
     std::cerr << "Failed to prepare program" << std::endl;
     return -1;
   }
+  defer(glDeleteProgram(programId));
+
   glDeleteShader(vertexShaderId);
   glDeleteShader(fragmentShaderId);
 
   GLuint vertexVBO;
   glGenBuffers(1, &vertexVBO);
+  defer(glDeleteBuffers(1, &vertexVBO));
+
   glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(globVertexBufferData), globVertexBufferData, GL_STATIC_DRAW);
 
   GLuint colorVBO;
   glGenBuffers(1, &colorVBO);
+  defer(glDeleteBuffers(1, &colorVBO));
+
   glBindBuffer(GL_ARRAY_BUFFER, colorVBO);
   glBufferData(GL_ARRAY_BUFFER, sizeof(globColorBufferData), globColorBufferData, GL_STATIC_DRAW);
 
   GLuint vao;
   glGenVertexArrays(1, &vao);
+  defer(glDeleteVertexArrays(1, &vao));
 
   glBindVertexArray(vao);
 
@@ -238,11 +245,6 @@ int main() {
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
-
-  glDeleteVertexArrays(1, &vao);
-  glDeleteBuffers(1, &vertexVBO);
-  glDeleteBuffers(1, &colorVBO);
-  glDeleteProgram(programId);
 
   return 0;
 }
