@@ -241,6 +241,7 @@ int main() {
 
   glDeleteVertexArrays(1, &vao);
   glDeleteBuffers(1, &vertexVBO);
+  glDeleteBuffers(1, &colorVBO);
   glDeleteProgram(programId);
 
   return 0;
